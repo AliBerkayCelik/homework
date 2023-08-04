@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tahmin Oyunu</title>
+</head>
+<body>
+ 
+  <label id="guessLabel">1. tahmini girin:</label>
+  <input type="number" id="guessInput">
+  <button id="guessButton">Tahmin yap</button>
+  <hr>
+  <label id="resultLabel"></label>
+
+
+  <script>
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    let guessCount = 1;
+
+
+    const guessLabel = document.getElementById("guessLabel");
+    const guessInput = document.getElementById("guessInput");
+    const guessButton = document.getElementById("guessButton");
+    const resultLabel = document.getElementById("resultLabel");
+
+
+    guessButton.addEventListener("click", function () {
+      const userGuess = parseInt(guessInput.value);
+      if (isNaN(userGuess)) {
+        resultLabel.textContent = "Lütfen geçerli bir sayı girin.";
+      } else {
+        if (userGuess === randomNumber) {
+          resultLabel.textContent = `Tebrikler! Sayı ${guessCount} adet denemede bulundu.`;
+        } else if (guessCount === 7) {
+          resultLabel.textContent = "Deneme hakkınız kalmadı. Kaybettiniz.";
+        } else {
+          const hint = userGuess < randomNumber ? "Daha büyük bir sayı girin." : "Daha küçük bir sayı girin.";
+          guessLabel.textContent = `${guessCount + 1}. tahmini girin:`;
+          resultLabel.textContent = hint;
+          guessCount++;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

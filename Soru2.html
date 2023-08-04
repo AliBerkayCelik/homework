@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 100px;
+  }
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+</style>
+<title>Sayı Üretici</title>
+</head>
+<body>
+  <h1>Sayı Üretici</h1>
+  <form>
+    <label for="minValue">Minimum Değer: <span id="minValueLabel">0</span></label>
+    <input type="range" id="minValue" min="0" max="100" value="0" step="1">
+   
+    <label for="maxValue">Maksimum Değer: <span id="maxValueLabel">100</span></label>
+    <input type="range" id="maxValue" min="0" max="100" value="100" step="1">
+   
+   
+   
+    <button type="button" id="generateButton">Sayı Üret</button>
+    <hr>
+    <label for="randomNumber">Rastgele Sayı:<span id="randomNumberLabel"> </span></label>
+   
+  </form>
+
+
+  <script>
+    const minValueInput = document.getElementById("minValue");
+    const maxValueInput = document.getElementById("maxValue");
+    const minValueLabel = document.getElementById("minValueLabel");
+    const maxValueLabel = document.getElementById("maxValueLabel");
+    const randomNumberLabel = document.getElementById("randomNumberLabel");
+    const generateButton = document.getElementById("generateButton");
+
+
+    generateButton.addEventListener("click", generateRandomNumber);
+
+
+    function generateRandomNumber() {
+      const minValue = parseInt(minValueInput.value);
+      const maxValue = parseInt(maxValueInput.value);
+      const randomValue = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+      randomNumberLabel.textContent = randomValue.toString();
+    }
+
+
+    minValueInput.addEventListener("input", updateMinValueLabel);
+    maxValueInput.addEventListener("input", updateMaxValueLabel);
+
+
+    function updateMinValueLabel() {
+      minValueLabel.textContent = minValueInput.value;
+    }
+
+
+    function updateMaxValueLabel() {
+      maxValueLabel.textContent = maxValueInput.value;
+    }
+  </script>
+</body>
+</html>
