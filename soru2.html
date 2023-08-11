@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sayı Tahmin Oyunu</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .guess-box {
+    display: inline-block;
+    margin-right: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Sayı Tahmin Oyunu</h2>
+  <p>Aşağıdaki inputlara tahmilerinizi girin</p>
+  <div id="guessInputs">
+    <div class="guess-box">
+      <label for="guessInput1">1. Tahmin:</label>
+      <input type="number" id="guessInput1" min="1" max="49">
+    </div>
+    <div class="guess-box">
+      <label for="guessInput2">2. Tahmin:</label>
+      <input type="number" id="guessInput2" min="1" max="49">
+    </div>
+    <div class="guess-box">
+      <label for="guessInput3">3. Tahmin:</label>
+      <input type="number" id="guessInput3" min="1" max="49">
+    </div>
+    <div class="guess-box">
+      <label for="guessInput4">4. Tahmin:</label>
+      <input type="number" id="guessInput4" min="1" max="49">
+    </div>
+    <div class="guess-box">
+      <label for="guessInput5">5. Tahmin:</label>
+      <input type="number" id="guessInput5" min="1" max="49">
+    </div>
+    <br>
+  </div>
+  <br>
+  <button id="guessButton" onclick="checkGuesses()">Tahminleri Gir</button>
+  <br>
+  <br>
+  <button id="lotteryButton" onclick="drawLotteryNumbers()" disabled>Kurayı Çek</button>
+  
+  <p id="result"></p>
+</div>
+
+<script>
+  let guesses = [];
+  let lotteryNumbers = [];
+
+  function checkGuesses() {
+    guesses = [];
+
+    for (let i = 1; i <= 5; i++) {
+      const guessInput = document.getElementById(`guessInput${i}`);
+      const guess = parseInt(guessInput.value);
+
+      if (isNaN(guess)) {
+        alert(`Lütfen ${i}. tahmin için bir sayı girin.`);
+        return;
+      }
+
+      if (guess < 1 || guess > 49) {
+        alert(`1-49 arasında bir sayı giriniz (${i}. tahmin).`);
+        return;
+      }
+
+      if (guesses.includes(guess)) {
+        alert(`Aynı tahmin bir kez girilebilir (${i}. tahmin).`);
+        return;
+      }
+
+      guesses.push(guess);
+    }
+
+    document.getElementById("guessButton").disabled = true;
+    document.getElementById("lotteryButton").disabled = false;
+  }
+
+  function drawLotteryNumbers() {
+    
+
+    const matchedNumbers = guesses.filter(guess => lotteryNumbers.includes(guess));
+
+    const resultElement = document.getElementById("result");
+    resultElement.textContent =
+      `Tahminler: ${guesses.join(', ')}\n` +
+      `Kazanan Sayılar: ${lotteryNumbers.join(', ')}\n` +
+      `Bilinen Sayılar: ${matchedNumbers.join(', ')}\n` +
+      `Toplam Bilinen Sayılar: ${matchedNumbers.length}`;
+
+    document.getElementById("lotteryButton").disabled = true;
+  }
+</script>
+</body>
+</html>

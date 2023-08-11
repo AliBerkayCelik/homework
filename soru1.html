@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <title>Number Display</title>
+  <style>
+    .number-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.number-box {
+  border: 1px solid #000;
+  padding: 10px;
+  margin: 10px;
+  width: 120px;
+}
+
+.number {
+  margin-bottom: 5px;
+  font-weight: normal;
+  color: black;
+}
+
+  </style>
+</head>
+<body>
+    <button id="sortButton" onclick="sortNumbers()">Sırala</button>
+    <button id="randomButton" onclick="selectRandomNumber()">Rastgele Sayı Seç</button>
+    <div id="numberContainer">
+      
+    </div>
+  <script>
+   const numberContainer = document.getElementById("numberContainer");
+const sortButton = document.getElementById("sortButton");
+const randomButton = document.getElementById("randomButton");
+let numbers = [];
+
+
+for (let i = 1; i <= 99; i++) {
+  numbers.push(i);
+}
+shuffleArray(numbers);
+
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+
+function displayNumbers() {
+  let displayString = "";
+
+  for (let i = 0; i < numbers.length; i++) {
+    displayString += `<span class="number">${numbers[i]}</span>`;
+
+    if ((i + 1) % 10 === 0) {
+      displayString += "<br>";
+    } else if (i !== numbers.length - 1) {
+      displayString += " ";
+    }
+  }
+
+  numberContainer.innerHTML = displayString;
+}
+
+
+function sortNumbers() {
+  numbers.sort((a, b) => a - b);
+  displayNumbers();
+  sortButton.disabled = true;
+  randomButton.disabled = false;
+}
+
+
+function selectRandomNumber() {
+  const randomIndex = Math.floor(Math.random() * numbers.length);
+  const randomNumber = numbers[randomIndex];
+
+  displayNumbers();
+
+  const spanElements = document.querySelectorAll("span");
+  const currentSpan = spanElements[randomIndex];
+  currentSpan.style.color = "red";
+  currentSpan.style.fontWeight = "bold";
+}
+
+
+displayNumbers();
+shuffleArray(numbers);
+
+  </script>
+</body>
+</html>
